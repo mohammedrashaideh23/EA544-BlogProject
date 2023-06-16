@@ -1,19 +1,17 @@
-package entity;
+package com.ea544.blogproject.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
+@RequiredArgsConstructor
 @Entity
 public class Post {
 
@@ -26,7 +24,7 @@ public class Post {
     private Date date;
     @ManyToOne
     User user;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn
     List<Comment> commentList = new ArrayList<>();
     @OneToOne
