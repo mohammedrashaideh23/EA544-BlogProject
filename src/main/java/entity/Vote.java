@@ -9,11 +9,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class Vote {
 
     @Id
@@ -21,10 +21,11 @@ public class Vote {
     private Integer id;
     private Integer voteCount;
 
-    public void upVote(){
+    public void upVote() {
         voteCount++;
     }
-    public void downVote(){
+
+    public void downVote() {
         voteCount--;
     }
 

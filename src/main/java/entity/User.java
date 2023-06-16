@@ -9,19 +9,12 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class User {
-
-    @OneToMany
-    @JoinColumn
-    List<Post> postList=new ArrayList<>();
-    @OneToMany
-    @JoinColumn
-    List<Comment> commentList=new ArrayList<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,5 +23,12 @@ public class User {
     private String email;
     private String password;
 
+    @OneToMany
+    @JoinColumn
+    List<Post> postList = new ArrayList<>();
+
+    @OneToMany
+    @JoinColumn
+    List<Comment> commentList = new ArrayList<>();
 
 }
