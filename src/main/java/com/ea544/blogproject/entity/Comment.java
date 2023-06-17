@@ -3,21 +3,23 @@ package com.ea544.blogproject.entity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Comment extends BaseEntity {
 
     private String content;
-    private boolean isDeleted;
+    //    @JsonManagedReference
     @ManyToOne(cascade = CascadeType.PERSIST)
     private User owner;
+    //    @JsonManagedReference
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Post post;
 
@@ -25,7 +27,6 @@ public class Comment extends BaseEntity {
     public String toString() {
         return "Comment{" +
                 "content='" + content + '\'' +
-                ", isDeleted=" + isDeleted +
                 '}';
     }
 }

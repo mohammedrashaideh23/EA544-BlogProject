@@ -9,6 +9,6 @@ import org.springframework.stereotype.Service;
 @Transactional
 public class VoteService extends BaseService<Vote, VoteRepo> {
     protected VoteService(VoteRepo voteRepo) {
-        super(voteRepo);
+        super(voteRepo, Vote.class);
     }
 }

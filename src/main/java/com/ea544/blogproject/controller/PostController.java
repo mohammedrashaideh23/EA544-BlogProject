@@ -1,53 +1,54 @@
 package com.ea544.blogproject.controller;
 
 import com.ea544.blogproject.Services.PostService;
-import com.ea544.blogproject.entity.Comment;
 import com.ea544.blogproject.entity.Post;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/post")
 public class PostController {
-    private final PostService _service;
+    private final PostService _postService;
 
     public PostController(PostService service) {
-        _service = service;
+        _postService = service;
     }
 
-    @PostMapping("/{email}")
-    public void save(@RequestBody Post post, @PathVariable String email) {
-
-        _service.save(post, email);
-
+    // create a new post
+    @PostMapping("/{username}")
+    public void save(@RequestBody Post post, @PathVariable String username) {
+        _postService.save(post, username);
     }
 
+    // get all posts
     @GetMapping("")
     public List<Post> get() {
-        return _service.get();
+        return _postService.get();
     }
 
+    // get a post by id
     @GetMapping("/{id}")
     public Post get(@PathVariable Integer id) {
-        return _service.get(id);
+        return _postService.get(id);
     }
 
+    // get posts for a certain user
+    @GetMapping("/{username}")
+    public List<Post> getUserPosts(@PathVariable String username) {
+        return _postService.get(username);
+    }
+
+    //delete a post
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
-        _service.delete(id);
+        _postService.delete(id);
     }
 
+    // update a post
     @PutMapping("/{id}")
     public void update(@PathVariable Integer id, @RequestBody Post post) {
-        _service.update(id, post);
-    }
-
-    @PostMapping("/comment")
-    public void addComment(@RequestBody Map<String, Objects> payload) {
-        _service.addComment(payload);
+        _postService.update(id, post);
     }
 
 

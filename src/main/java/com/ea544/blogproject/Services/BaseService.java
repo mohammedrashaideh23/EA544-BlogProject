@@ -3,16 +3,17 @@ package com.ea544.blogproject.Services;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
 public abstract class BaseService<T, Repo extends JpaRepository<T, Integer>> {
 
     protected final Repo _repo;
+    protected final Class<T> type;
 
-    protected BaseService(Repo repo) {
+    protected BaseService(Repo repo, Class<T> type) {
         _repo = repo;
+        this.type = type;
     }
 
     public void save(T entity) {
@@ -24,7 +25,7 @@ public abstract class BaseService<T, Repo extends JpaRepository<T, Integer>> {
         if (temp.isPresent()) {
             _repo.save(entity);
         } else {
-            throw new EntityNotFoundException("Entity with id: " + id + " is not found");
+            throw new EntityNotFoundException(type.getName() + " with id: " + id + " is not found");
         }
     }
 

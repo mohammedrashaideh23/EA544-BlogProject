@@ -1,8 +1,10 @@
 package com.ea544.blogproject.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -10,32 +12,38 @@ import java.util.List;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "BlogUser")
 public class User extends BaseEntity {
 
-    private String userName;
+    //    private String userName;
+    @Email
     private String email;
     private String password;
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn
-    List<Post> postList = new ArrayList<>();
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn
-    List<Comment> commentList = new ArrayList<>();
+    //    @JsonBackReference
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<Post> postList = new ArrayList<>();
+    //    @JsonBackReference
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<Comment> commentList = new ArrayList<>();
 
     @Override
     public String toString() {
         return "User{" +
-                "userName='" + userName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", postList=" + postList +
                 ", commentList=" + commentList +
                 '}';
+    }
+
+    public String getUsername() {
+        if (email != null) {
+            return email.split("@")[0];
+        }
+        return null;
     }
 
     public void addComment(Comment comment) {

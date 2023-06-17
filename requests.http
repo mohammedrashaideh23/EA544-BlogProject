@@ -1,0 +1,30 @@
+### get users
+GET localhost:8080/api/user
+
+### create user
+
+POST localhost:8080/api/user
+Content-Type: application/json
+
+{
+  "password": "test123",
+  "email": "ahmed@blog.com",
+  "deleted": false
+}
+
+###delete use
+DELETE localhost:8080/api/user/1
+
+### get posts
+
+GET http://localhost:8080/api/post
+
+### create post
+
+POST http://localhost:8080/api/post/ahmed
+Content-Type: application/json
+
+{
+  "title": "test post",
+  "description": "test description"
+}

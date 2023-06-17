@@ -8,7 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/comment")
-public class CommentController implements BaseController<Comment> {
+public class CommentController {
 
     private final CommentRepo repo;
 
@@ -17,19 +17,16 @@ public class CommentController implements BaseController<Comment> {
     }
 
     @GetMapping("/{id}")
-    @Override
     public Comment get(@PathVariable Integer id) {
         return repo.findById(id).orElseThrow();
     }
 
     @GetMapping("")
-    @Override
     public List<Comment> get() {
         return repo.findAll();
     }
 
     @PutMapping("/{id}")
-    @Override
     public void update(@RequestBody Comment comment, @PathVariable Integer id) {
         if (repo.existsById(id)) {
             repo.findById(id).get().setContent(comment.getContent());
@@ -39,16 +36,14 @@ public class CommentController implements BaseController<Comment> {
     }
 
     @DeleteMapping("/{id}")
-    @Override
     public void delete(@PathVariable Integer id) {
         repo.deleteById(id);
 
     }
 
     @PostMapping("")
-    @Override
-    public void save(@RequestBody Comment entity) {
-        repo.save(entity);
+    public void save(@RequestBody Comment comment) {
+        repo.save(comment);
 
 
     }

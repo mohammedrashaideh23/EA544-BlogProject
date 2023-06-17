@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Transactional
 public class CommentService extends BaseService<Comment, CommentRepo> {
     protected CommentService(CommentRepo commentRepo) {
-        super(commentRepo);
+        super(commentRepo, Comment.class);
     }
 
 }
