@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 public abstract class BaseService<T, Repo extends JpaRepository<T, Integer>> {
@@ -27,15 +28,15 @@ public abstract class BaseService<T, Repo extends JpaRepository<T, Integer>> {
         }
     }
 
-    public void delete(int id) {
+    public void delete(Integer id) {
         _repo.deleteById(id);
     }
 
-    public Collection<T> get() {
+    public List<T> get() {
         return _repo.findAll();
     }
 
-    public T get(int id) {
+    public T get(Integer id) {
         Optional<T> temp = _repo.findById(id);
         if (temp.isPresent()) {
             return temp.get();

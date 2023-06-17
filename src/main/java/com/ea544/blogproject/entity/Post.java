@@ -23,7 +23,7 @@ public class Post {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
     @ManyToOne
-    User user;
+    User owner;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn
     List<Comment> commentList = new ArrayList<>();
@@ -31,4 +31,15 @@ public class Post {
     Vote vote;
 
 
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", date=" + date +
+                ", commentList=" + commentList +
+                ", vote=" + vote +
+                '}';
+    }
 }

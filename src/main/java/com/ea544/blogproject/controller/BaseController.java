@@ -2,14 +2,16 @@ package com.ea544.blogproject.controller;
 
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
+
 public interface BaseController<T> {
-    T get(int id);
+    T get(Integer id);
 
-    T get();
+    List<T> get();
 
-    void put(RequestBody T);
+    void update(@RequestBody  T entity ,Integer id);
 
-    void delete(int id);
+    void delete(Integer id);
 
     void save(@RequestBody T entity);
 

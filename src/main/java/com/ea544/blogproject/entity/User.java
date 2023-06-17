@@ -27,4 +27,18 @@ public class User extends BaseEntity {
     @JoinColumn
     List<Comment> commentList = new ArrayList<>();
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "userName='" + userName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", postList=" + postList +
+                ", commentList=" + commentList +
+                '}';
+    }
+
+    public void addComment(Comment comment) {
+        commentList.add(comment);
+    }
 }
