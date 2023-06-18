@@ -16,7 +16,6 @@ Content-Type: application/json
 DELETE localhost:8080/api/user/1
 
 ### get posts
-
 GET http://localhost:8080/api/post
 
 ### create post

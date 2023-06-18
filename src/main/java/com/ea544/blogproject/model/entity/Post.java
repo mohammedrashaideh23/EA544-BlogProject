@@ -1,4 +1,4 @@
-package com.ea544.blogproject.entity;
+package com.ea544.blogproject.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -20,10 +20,10 @@ public class Post extends BaseEntity {
     private String description;
     //    @JsonManagedReference
     @ManyToOne
-    User owner;
+    UserEntity postOwner;
     //    @JsonBackReference
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    List<Comment> commentList = new ArrayList<>();
+    List<Comment> comments = new ArrayList<>();
     //    @JsonBackReference
     @OneToOne(mappedBy = "post")
     Vote vote;
@@ -42,7 +42,7 @@ public class Post extends BaseEntity {
                 "id=" + getId() +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", commentList=" + commentList +
+                ", commentList=" + comments +
                 ", vote=" + vote +
                 '}';
     }

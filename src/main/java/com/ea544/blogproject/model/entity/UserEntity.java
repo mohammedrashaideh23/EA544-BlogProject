@@ -1,4 +1,4 @@
-package com.ea544.blogproject.entity;
+package com.ea544.blogproject.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -16,17 +16,17 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "BlogUser")
-public class User extends BaseEntity {
+public class UserEntity extends BaseEntity {
 
     //    private String userName;
     @Email
     private String email;
     private String password;
     //    @JsonBackReference
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "postOwner", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Post> postList = new ArrayList<>();
     //    @JsonBackReference
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "commentOwner", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Comment> commentList = new ArrayList<>();
 
     @Override

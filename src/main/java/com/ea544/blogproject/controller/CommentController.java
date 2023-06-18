@@ -1,7 +1,9 @@
 package com.ea544.blogproject.controller;
 
 import com.ea544.blogproject.Repo.CommentRepo;
-import com.ea544.blogproject.entity.Comment;
+import com.ea544.blogproject.model.dto.CommentDto;
+import com.ea544.blogproject.model.entity.Comment;
+import com.ea544.blogproject.model.mapper.CommentMapper;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,13 +19,20 @@ public class CommentController {
     }
 
     @GetMapping("/{id}")
-    public Comment get(@PathVariable Integer id) {
-        return repo.findById(id).orElseThrow();
+    public CommentDto get(@PathVariable Integer id) {
+        var result = repo.findById(id).orElseThrow();
+        return CommentMapper.INSTANCE.commentToCommentDto(result);
     }
 
     @GetMapping("")
-    public List<Comment> get() {
-        return repo.findAll();
+    public List<CommentDto> get() {
+        var result = repo.findAll();
+        return CommentMapper.INSTANCE.toDtoList(result);
+    }
+
+    @PostMapping("")
+    public void save(@RequestBody Comment comment) {
+        repo.save(comment);
     }
 
     @PutMapping("/{id}")
@@ -32,7 +41,6 @@ public class CommentController {
             repo.findById(id).get().setContent(comment.getContent());
         }
         repo.save(comment);
-
     }
 
     @DeleteMapping("/{id}")
@@ -41,10 +49,4 @@ public class CommentController {
 
     }
 
-    @PostMapping("")
-    public void save(@RequestBody Comment comment) {
-        repo.save(comment);
-
-
-    }
 }

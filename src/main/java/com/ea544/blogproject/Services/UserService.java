@@ -3,9 +3,9 @@ package com.ea544.blogproject.Services;
 import com.ea544.blogproject.Repo.CommentRepo;
 import com.ea544.blogproject.Repo.PostRepo;
 import com.ea544.blogproject.Repo.UserRepo;
-import com.ea544.blogproject.entity.Comment;
-import com.ea544.blogproject.entity.Post;
-import com.ea544.blogproject.entity.User;
+import com.ea544.blogproject.model.entity.Comment;
+import com.ea544.blogproject.model.entity.Post;
+import com.ea544.blogproject.model.entity.UserEntity;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -17,12 +17,12 @@ import java.util.function.Consumer;
 
 @Service
 @Transactional
-public class UserService extends BaseService<User, UserRepo> {
+public class UserService extends BaseService<UserEntity, UserRepo> {
     private final PostRepo _postRepo;
     private final CommentRepo _commentRepo;
 
     protected UserService(UserRepo userRepo, PostRepo postRepo, CommentRepo commentRepo) {
-        super(userRepo, User.class);
+        super(userRepo, UserEntity.class);
         _postRepo = postRepo;
         _commentRepo = commentRepo;
     }
@@ -31,11 +31,11 @@ public class UserService extends BaseService<User, UserRepo> {
         Integer tempPostId = Integer.parseInt(payload.get("postid").toString());
         String tempUserName = payload.get("username").toString();
         String tempComment = payload.get("comment").toString();
-        User owner = _repo.findByEmailStartingWith(tempUserName);
+        UserEntity owner = _repo.findByEmailStartingWith(tempUserName);
         Post post = _postRepo.findById(tempPostId).orElseThrow();
         Comment comment = new Comment();
         comment.setPost(post);
-        comment.setOwner(owner);
+        comment.setCommentOwner(owner);
         _commentRepo.save(comment);
     }
 

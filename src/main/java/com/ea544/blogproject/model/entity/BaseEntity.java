@@ -1,4 +1,4 @@
-package com.ea544.blogproject.entity;
+package com.ea544.blogproject.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

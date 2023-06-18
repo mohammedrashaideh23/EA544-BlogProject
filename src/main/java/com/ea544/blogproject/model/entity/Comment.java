@@ -1,4 +1,4 @@
-package com.ea544.blogproject.entity;
+package com.ea544.blogproject.model.entity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -18,7 +18,7 @@ public class Comment extends BaseEntity {
     private String content;
     //    @JsonManagedReference
     @ManyToOne(cascade = CascadeType.PERSIST)
-    private User owner;
+    private UserEntity commentOwner;
     //    @JsonManagedReference
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Post post;

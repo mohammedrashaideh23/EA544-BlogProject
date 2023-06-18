@@ -2,7 +2,7 @@ package com.ea544.blogproject.Services;
 
 import com.ea544.blogproject.Repo.PostRepo;
 import com.ea544.blogproject.Repo.UserRepo;
-import com.ea544.blogproject.entity.Post;
+import com.ea544.blogproject.model.entity.Post;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +21,11 @@ public class PostService extends BaseService<Post, PostRepo> {
 
     public void save(Post post, String email) {
         var user = _userRepo.findByEmailStartingWith(email);
-        post.setOwner(user);
+        post.setPostOwner(user);
         _repo.save(post);
     }
 
     public List<Post> get(String username) {
-        return _repo.findByOwner_EmailStartsWith(username);
+        return _repo.findByPostOwner_EmailStartsWith(username);
     }
 }
