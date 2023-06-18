@@ -10,13 +10,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/post")
+//@RequiredArgsConstructor
 public class PostController {
     private final PostService _postService;
 
-    public PostController(PostService service) {
-        _postService = service;
+    public PostController(PostService postService) {
+        _postService = postService;
     }
-
+//    private final PostMapper _postMapper;
 
     // get all posts
     @GetMapping("")

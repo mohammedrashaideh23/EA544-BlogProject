@@ -8,12 +8,14 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper
+@Mapper(
+//        componentModel = "spring"
+)
 public interface CommentMapper {
     CommentMapper INSTANCE = Mappers.getMapper(CommentMapper.class);
 
     //    @Mapping(source = "createdDate", target = "created")
-    @Mapping(source = "commentOwner", target = "owner")
+    @Mapping(source = "commentOwner.email", target = "owner")
     CommentDto commentToCommentDto(Comment comment);
 
     List<CommentDto> toDtoList(List<Comment> commentList);

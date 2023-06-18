@@ -4,12 +4,9 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+//@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -23,10 +20,30 @@ public class Comment extends BaseEntity {
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Post post;
 
-    @Override
-    public String toString() {
-        return "Comment{" +
-                "content='" + content + '\'' +
-                '}';
+    public String getContent() {
+        return content;
+    }
+
+    public Comment setContent(String content) {
+        this.content = content;
+        return this;
+    }
+
+    public UserEntity getCommentOwner() {
+        return commentOwner;
+    }
+
+    public Comment setCommentOwner(UserEntity commentOwner) {
+        this.commentOwner = commentOwner;
+        return this;
+    }
+
+    public Post getPost() {
+        return post;
+    }
+
+    public Comment setPost(Post post) {
+        this.post = post;
+        return this;
     }
 }

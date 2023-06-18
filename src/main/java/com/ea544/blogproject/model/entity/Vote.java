@@ -3,15 +3,13 @@ package com.ea544.blogproject.model.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 
-@Getter
-@Setter
+//@Data
 @AllArgsConstructor
 @NoArgsConstructor
+//@Builder
 @Entity
 public class Vote extends BaseEntity {
 
@@ -20,6 +18,7 @@ public class Vote extends BaseEntity {
     //    @JsonManagedReference
     @OneToOne
     private Post post;
+
     public void upVote() {
         voteCount++;
     }
@@ -28,4 +27,21 @@ public class Vote extends BaseEntity {
         voteCount--;
     }
 
+    public Integer getVoteCount() {
+        return voteCount;
+    }
+
+    public Vote setVoteCount(Integer voteCount) {
+        this.voteCount = voteCount;
+        return this;
+    }
+
+    public Post getPost() {
+        return post;
+    }
+
+    public Vote setPost(Post post) {
+        this.post = post;
+        return this;
+    }
 }

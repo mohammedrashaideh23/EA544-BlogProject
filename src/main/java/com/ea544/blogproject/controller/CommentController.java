@@ -10,6 +10,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/comment")
+//@AllArgsConstructor
+//@NoArgsConstructor
+//@RequiredArgsConstructor
 public class CommentController {
 
     private final CommentRepo repo;
@@ -17,6 +20,7 @@ public class CommentController {
     public CommentController(CommentRepo repo) {
         this.repo = repo;
     }
+//    private final CommentMapper _commentMapper;
 
     @GetMapping("/{id}")
     public CommentDto get(@PathVariable Integer id) {
