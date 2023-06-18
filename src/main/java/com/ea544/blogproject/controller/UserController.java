@@ -1,9 +1,7 @@
 package com.ea544.blogproject.controller;
 
 import com.ea544.blogproject.Services.UserService;
-import com.ea544.blogproject.model.dto.UserEntityDto;
 import com.ea544.blogproject.model.entity.UserEntity;
-import com.ea544.blogproject.model.mapper.UserMapper;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,9 +19,10 @@ public class UserController {
 
     //    private final UserMapper _userMapper;
     @GetMapping("")
-    public List<UserEntityDto> get() {
+    public List<UserEntity> get() {
         var result = _userService.get();
-        return UserMapper.INSTANCE.userToUserDto(result);
+        return result;
+//        return UserMapper.INSTANCE.userToUserDto(result);
     }
 
     @PostMapping("")
