@@ -2,9 +2,7 @@ package com.ea544.blogproject.controller;
 
 import com.ea544.blogproject.Services.PostService;
 import com.ea544.blogproject.Services.UserService;
-import com.ea544.blogproject.model.dto.PostDto;
 import com.ea544.blogproject.model.entity.Post;
-import com.ea544.blogproject.model.mapper.PostMapper;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,25 +25,27 @@ public class PostController {
     //region Post Actions
     // get all posts
     @GetMapping("")
-    public List<PostDto> get() {
+    public List<Post> get() {
         var result = _postService.get();
-        return PostMapper.INSTANCE.toDtoList(result);
+        return result;
+//        return PostMapper.INSTANCE.toDtoList(result);
     }
 
     // get a post by id
     @GetMapping("/{id}")
-    public PostDto get(@PathVariable Integer id) {
+    public Post get(@PathVariable Integer id) {
         var result = _postService.get(id);
-
-        return PostMapper.INSTANCE.postToPostDto(result);
+        return result;
+//        return PostMapper.INSTANCE.postToPostDto(result);
     }
 
     // get posts for a certain user
     @GetMapping("/{username}")
-    public List<PostDto> getUserPosts(@PathVariable String username) {
+    public List<Post> getUserPosts(@PathVariable String username) {
 
         var result = _postService.get(username);
-        return PostMapper.INSTANCE.toDtoList(result);
+        return result;
+//        return PostMapper.INSTANCE.toDtoList(result);
     }
 
     // create a new post
