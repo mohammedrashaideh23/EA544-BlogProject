@@ -1,24 +1,30 @@
 package com.ea544.blogproject.controller;
 
 import com.ea544.blogproject.Services.PostService;
+import com.ea544.blogproject.Services.UserService;
 import com.ea544.blogproject.model.dto.PostDto;
 import com.ea544.blogproject.model.entity.Post;
 import com.ea544.blogproject.model.mapper.PostMapper;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/post")
 //@RequiredArgsConstructor
 public class PostController {
     private final PostService _postService;
+    private final UserService _userService;
 
-    public PostController(PostService postService) {
+    public PostController(PostService postService, UserService userService) {
         _postService = postService;
+        _userService = userService;
     }
 //    private final PostMapper _postMapper;
 
+    //region Post Actions
     // get all posts
     @GetMapping("")
     public List<PostDto> get() {
@@ -59,5 +65,34 @@ public class PostController {
     public void delete(@PathVariable Integer id) {
         _postService.delete(id);
     }
+    //endregion
+
+    //region Comments actions
+    @PostMapping("/action/{username}/comment")
+    public void addComment(@PathVariable String username, @RequestBody Map<String, Objects> payload) {
+        _userService.addComment(username, payload);
+    }
+
+    @PutMapping("/action/{username}/comment/{commentId}")
+    public void updateComment(@PathVariable int commentId, @PathVariable String username, @RequestBody Map<String, Object> payload) {
+        _userService.updateComment(username, commentId, payload);
+    }
+
+    @DeleteMapping("/action/{username}/comment/{id}")
+    public void deleteComment(@PathVariable String username, @PathVariable int id) {
+        _userService.deleteComment(username, id);
+    }
+
+    @PostMapping("/action/{postId}/upvote")
+    public void upVote(@PathVariable int postId) {
+        _userService.vote(postId, Post::upVote);
+    }
+
+    @PostMapping("/action/{postId}/downvote")
+    public void downVote(@PathVariable int postId) {
+        _userService.vote(postId, Post::downVote);
+    }
+
+    //endregion
 
 }
