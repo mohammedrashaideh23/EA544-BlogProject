@@ -99,6 +99,14 @@
 					<target>1.8</target>
 					<annotationProcessorPaths>
 						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>1.18.26</version>
+							<!--							<optional>true</optional>-->
+
+
+						</path>
+						<path>
 							<groupId>org.mapstruct</groupId>
 							<artifactId>mapstruct-processor</artifactId>
 							<version>1.5.3.Final</version>

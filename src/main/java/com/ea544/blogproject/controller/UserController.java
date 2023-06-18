@@ -1,7 +1,9 @@
 package com.ea544.blogproject.controller;
 
 import com.ea544.blogproject.Services.UserService;
-import com.ea544.blogproject.model.entity.UserEntity;
+import com.ea544.blogproject.model.dto.UserDto;
+import com.ea544.blogproject.model.entity.User;
+import com.ea544.blogproject.model.mapper.UserMapper;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,14 +21,14 @@ public class UserController {
 
     //    private final UserMapper _userMapper;
     @GetMapping("")
-    public List<UserEntity> get() {
+    public List<UserDto> get() {
         var result = _userService.get();
-        return result;
-//        return UserMapper.INSTANCE.userToUserDto(result);
+//        return result;
+        return UserMapper.INSTANCE.userToUserDto(result);
     }
 
     @PostMapping("")
-    public void save(@RequestBody UserEntity user) {
+    public void save(@RequestBody User user) {
         _userService.save(user);
     }
 
@@ -36,7 +38,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public void update(@PathVariable int id, @RequestBody UserEntity user) {
+    public void update(@PathVariable int id, @RequestBody User user) {
         _userService.update(id, user);
     }
 

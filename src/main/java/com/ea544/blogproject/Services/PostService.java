@@ -7,6 +7,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 @Service
 @Transactional
@@ -21,11 +22,20 @@ public class PostService extends BaseService<Post, PostRepo> {
 
     public void save(Post post, String email) {
         var user = _userRepo.findByEmailStartingWith(email);
-        post.setPostOwner(user);
+        post.setOwner(user);
+//        post.setVote(new Vote());
         _repo.save(post);
     }
 
     public List<Post> get(String username) {
-        return _repo.findByPostOwner_EmailStartsWith(username);
+        return _repo.findByOwner_EmailStartsWith(username);
     }
+
+    public void vote(int postId, Consumer<Post> action) {
+        Post post = _repo.findById(postId).get();
+//        post.setVote(new Vote());
+        action.accept(post);
+        _repo.save(post);
+    }
+
 }

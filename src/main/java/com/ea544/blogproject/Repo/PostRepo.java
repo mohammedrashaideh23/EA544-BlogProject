@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface PostRepo extends JpaRepository<Post, Integer> {
     //    List<Post> findByOwner_EmailStartsWith(String email);
-    List<Post> findByPostOwner_EmailStartsWith(String email);
+    List<Post> findByOwner_EmailStartsWith(String email);
 
 }

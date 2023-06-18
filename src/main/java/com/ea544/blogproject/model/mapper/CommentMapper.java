@@ -15,7 +15,8 @@ public interface CommentMapper {
     CommentMapper INSTANCE = Mappers.getMapper(CommentMapper.class);
 
     //    @Mapping(source = "createdDate", target = "created")
-    @Mapping(source = "commentOwner.email", target = "owner")
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "userName", target = "owner")
     CommentDto commentToCommentDto(Comment comment);
 
     List<CommentDto> toDtoList(List<Comment> commentList);

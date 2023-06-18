@@ -5,42 +5,58 @@ import com.ea544.blogproject.Repo.PostRepo;
 import com.ea544.blogproject.Repo.UserRepo;
 import com.ea544.blogproject.model.entity.Comment;
 import com.ea544.blogproject.model.entity.Post;
-import com.ea544.blogproject.model.entity.UserEntity;
+import com.ea544.blogproject.model.entity.User;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
-import java.util.Objects;
-import java.util.function.Consumer;
 
 @Service
 @Transactional
-public class UserService extends BaseService<UserEntity, UserRepo> {
+public class UserService extends BaseService<User, UserRepo> {
     private final PostRepo _postRepo;
     private final CommentRepo _commentRepo;
 
     protected UserService(UserRepo userRepo, PostRepo postRepo, CommentRepo commentRepo) {
-        super(userRepo, UserEntity.class);
+        super(userRepo, User.class);
         _postRepo = postRepo;
         _commentRepo = commentRepo;
     }
 
-    public void addComment(String username, Map<String, Objects> payload) {
-        Integer tempPostId = Integer.parseInt(payload.get("postid").toString());
-        String tempComment = payload.get("comment").toString();
-        UserEntity owner = _repo.findByEmailStartingWith(username);
-        Post post = _postRepo.findById(tempPostId).orElseThrow();
+    private static Comment createComment(String tempContent, User owner, Post post) {
         Comment comment = new Comment();
         comment.setPost(post);
-        comment.setCommentOwner(owner);
-        _commentRepo.save(comment);
+        comment.setOwner(owner);
+        comment.setContent(tempContent);
+        return comment;
+    }
+
+    public void addComment(int postId,
+                           String username,
+                           Map<String, Object> payload) {
+        String tempContent = extractFromPayload(payload,
+                "content")
+                .toString();
+        User owner = _repo
+                .findByEmailStartingWith(username);
+        Post post = _postRepo
+                .findById(postId)
+                .orElseThrow();
+        _commentRepo.save(createComment(tempContent, owner, post));
+    }
+
+    public Object extractFromPayload(Map<String, Object> payload,
+                                     String element) {
+
+        return payload.get(element);
+
     }
 
     public void updateComment(String username, int id, Map<String, Object> payload) {
         String content = payload.get("content").toString();
         Comment comment = _commentRepo.findById(id).get();
 
-        if (comment.getCommentOwner().getEmail().startsWith(username)) {
+        if (comment.getOwner().getEmail().startsWith(username)) {
             comment.setContent(content);
             _commentRepo.save(comment);
         } else {
@@ -49,18 +65,13 @@ public class UserService extends BaseService<UserEntity, UserRepo> {
     }
 
     public void deleteComment(String username, int id) {
-        if (_commentRepo.findById(id).get().getCommentOwner().getEmail().startsWith(username)) {
+        if (_commentRepo.findById(id).get().getOwner().getEmail().startsWith(username)) {
             _commentRepo.deleteById(id);
         } else {
             throw new RuntimeException("the user is not owner of this comment");
         }
     }
 
-    public void vote(int postId, Consumer<Post> action) {
-        Post post = _postRepo.findById(postId).get();
-        action.accept(post);
-        _postRepo.save(post);
-    }
 }
 
 
