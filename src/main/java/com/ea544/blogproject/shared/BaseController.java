@@ -1,4 +1,4 @@
-package com.ea544.blogproject.controller;
+package com.ea544.blogproject.shared;
 
 import org.springframework.web.bind.annotation.RequestBody;
 

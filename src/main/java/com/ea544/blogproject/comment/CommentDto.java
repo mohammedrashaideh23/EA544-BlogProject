@@ -1,4 +1,4 @@
-package com.ea544.blogproject.model.dto;
+package com.ea544.blogproject.comment;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.ea544.blogproject.model.entity;
+package com.ea544.blogproject.shared;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -6,7 +6,6 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-//@ToString
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class BaseEntity {

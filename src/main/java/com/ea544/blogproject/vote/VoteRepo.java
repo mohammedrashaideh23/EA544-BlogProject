@@ -1,6 +1,5 @@
-package com.ea544.blogproject.Repo;
+package com.ea544.blogproject.vote;
 
-import com.ea544.blogproject.model.entity.Vote;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface VoteRepo extends JpaRepository<Vote, Integer> {

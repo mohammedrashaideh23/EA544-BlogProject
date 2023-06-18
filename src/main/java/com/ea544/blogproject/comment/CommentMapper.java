@@ -1,7 +1,5 @@
-package com.ea544.blogproject.model.mapper;
+package com.ea544.blogproject.comment;
 
-import com.ea544.blogproject.model.dto.CommentDto;
-import com.ea544.blogproject.model.entity.Comment;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

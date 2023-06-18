@@ -1,5 +1,8 @@
-package com.ea544.blogproject.model.entity;
+package com.ea544.blogproject.user;
 
+import com.ea544.blogproject.comment.Comment;
+import com.ea544.blogproject.post.Post;
+import com.ea544.blogproject.shared.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.Data;
@@ -16,11 +19,8 @@ public class User
     private String email;
     private String password;
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<Post> postList = new ArrayList<>();
+    private final List<Post> postList = new ArrayList<>();
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<Comment> commentList = new ArrayList<>();
+    private final List<Comment> commentList = new ArrayList<>();
 
-    public void addComment(Comment comment) {
-        commentList.add(comment);
-    }
 }

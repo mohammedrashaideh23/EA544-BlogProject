@@ -1,12 +1,13 @@
-package com.ea544.blogproject.Services;
+package com.ea544.blogproject.post;
 
-import com.ea544.blogproject.Repo.PostRepo;
-import com.ea544.blogproject.Repo.UserRepo;
-import com.ea544.blogproject.model.entity.Post;
+import com.ea544.blogproject.shared.BaseService;
+import com.ea544.blogproject.user.UserRepo;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 @Service
@@ -37,5 +38,23 @@ public class PostService extends BaseService<Post, PostRepo> {
         action.accept(post);
         _repo.save(post);
     }
+
+    public void deletePost(Map<String, Object> payload) {
+        String username = payload.get("username").toString();
+        int postId = Integer.parseInt(payload.get("postId").toString());
+        Post post = _repo.findById(postId).get();
+        if (post
+                .getOwner()
+                .getEmail()
+                .startsWith(username)) {
+            _userRepo.findByEmailStartingWith(username)
+                    .getPostList()
+                    .remove(post);
+        } else {
+
+            throw new EntityNotFoundException("Not found");
+        }
+    }
+
 
 }

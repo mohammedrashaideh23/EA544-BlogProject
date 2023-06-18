@@ -1,13 +1,14 @@
-package com.ea544.blogproject.model.entity;
+package com.ea544.blogproject.comment;
 
+import com.ea544.blogproject.post.Post;
+import com.ea544.blogproject.shared.BaseEntity;
+import com.ea544.blogproject.user.User;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 @Data
-//@AllArgsConstructor
-//@NoArgsConstructor
 @Entity
 public class Comment extends
         BaseEntity {

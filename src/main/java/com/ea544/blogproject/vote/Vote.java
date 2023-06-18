@@ -1,14 +1,13 @@
-package com.ea544.blogproject.model.entity;
+package com.ea544.blogproject.vote;
 
+import com.ea544.blogproject.post.Post;
+import com.ea544.blogproject.shared.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import lombok.Data;
 
 
 @Data
-//@AllArgsConstructor
-//@NoArgsConstructor
-//@Builder
 @Entity
 public class Vote extends BaseEntity {
 

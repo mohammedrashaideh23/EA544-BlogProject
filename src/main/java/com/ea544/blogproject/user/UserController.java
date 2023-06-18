@@ -1,9 +1,5 @@
-package com.ea544.blogproject.controller;
+package com.ea544.blogproject.user;
 
-import com.ea544.blogproject.Services.UserService;
-import com.ea544.blogproject.model.dto.UserDto;
-import com.ea544.blogproject.model.entity.User;
-import com.ea544.blogproject.model.mapper.UserMapper;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

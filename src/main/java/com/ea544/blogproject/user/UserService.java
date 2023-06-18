@@ -1,11 +1,10 @@
-package com.ea544.blogproject.Services;
+package com.ea544.blogproject.user;
 
-import com.ea544.blogproject.Repo.CommentRepo;
-import com.ea544.blogproject.Repo.PostRepo;
-import com.ea544.blogproject.Repo.UserRepo;
-import com.ea544.blogproject.model.entity.Comment;
-import com.ea544.blogproject.model.entity.Post;
-import com.ea544.blogproject.model.entity.User;
+import com.ea544.blogproject.comment.Comment;
+import com.ea544.blogproject.comment.CommentRepo;
+import com.ea544.blogproject.post.Post;
+import com.ea544.blogproject.post.PostRepo;
+import com.ea544.blogproject.shared.BaseService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -52,11 +51,16 @@ public class UserService extends BaseService<User, UserRepo> {
 
     }
 
-    public void updateComment(String username, int id, Map<String, Object> payload) {
+    public void updateComment(Map<String, Object> payload) {
         String content = payload.get("content").toString();
-        Comment comment = _commentRepo.findById(id).get();
+        String username = payload.get("username").toString();
+        int commentId = Integer.parseInt(payload.get("commentId").toString());
+        Comment comment = _commentRepo.findById(commentId).get();
 
-        if (comment.getOwner().getEmail().startsWith(username)) {
+        if (comment
+                .getOwner()
+                .getEmail()
+                .startsWith(username)) {
             comment.setContent(content);
             _commentRepo.save(comment);
         } else {
@@ -64,9 +68,18 @@ public class UserService extends BaseService<User, UserRepo> {
         }
     }
 
-    public void deleteComment(String username, int id) {
-        if (_commentRepo.findById(id).get().getOwner().getEmail().startsWith(username)) {
-            _commentRepo.deleteById(id);
+    public void deleteComment(Map<String, Object> payload) {
+        int postId = Integer.parseInt(extractFromPayload(payload, "postId").toString());
+        int commentId = Integer.parseInt(extractFromPayload(payload, "commentId").toString());
+        String username = extractFromPayload(payload, "username").toString();
+        Comment comment = _commentRepo
+                .findByIdAndOwner_EmailStartsWith(commentId, username);
+        if (comment != null) {
+            _postRepo
+                    .findById(postId)
+                    .get()
+                    .getComments()
+                    .remove(comment);
         } else {
             throw new RuntimeException("the user is not owner of this comment");
         }

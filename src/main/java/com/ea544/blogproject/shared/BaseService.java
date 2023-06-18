@@ -1,6 +1,5 @@
-package com.ea544.blogproject.Services;
+package com.ea544.blogproject.shared;
 
-import com.ea544.blogproject.model.entity.BaseEntity;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;
 

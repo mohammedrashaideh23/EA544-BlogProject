@@ -1,6 +1,5 @@
-package com.ea544.blogproject.Repo;
+package com.ea544.blogproject.user;
 
-import com.ea544.blogproject.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepo extends JpaRepository<User, Integer> {

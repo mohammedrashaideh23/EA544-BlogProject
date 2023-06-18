@@ -1,7 +1,7 @@
-package com.ea544.blogproject.model.mapper;
+package com.ea544.blogproject.post;
 
-import com.ea544.blogproject.model.dto.PostDto;
-import com.ea544.blogproject.model.entity.Post;
+import com.ea544.blogproject.comment.CommentMapper;
+import com.ea544.blogproject.user.UserMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

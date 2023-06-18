@@ -1,5 +1,9 @@
-package com.ea544.blogproject.model.entity;
+package com.ea544.blogproject.post;
 
+import com.ea544.blogproject.comment.Comment;
+import com.ea544.blogproject.shared.BaseEntity;
+import com.ea544.blogproject.user.User;
+import com.ea544.blogproject.vote.Vote;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -19,9 +23,9 @@ public class Post
     @ManyToOne(cascade = CascadeType.PERSIST)
     User owner;
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<Comment> comments = new ArrayList<>();
+    private final List<Comment> comments = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL)
-    private Vote vote = new Vote();
+    private final Vote vote = new Vote();
 
     public void upVote() {
         vote.upVote();

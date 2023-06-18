@@ -1,7 +1,6 @@
-package com.ea544.blogproject.Services;
+package com.ea544.blogproject.comment;
 
-import com.ea544.blogproject.Repo.CommentRepo;
-import com.ea544.blogproject.model.entity.Comment;
+import com.ea544.blogproject.shared.BaseService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 

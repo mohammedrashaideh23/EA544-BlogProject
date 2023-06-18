@@ -1,9 +1,5 @@
-package com.ea544.blogproject.controller;
+package com.ea544.blogproject.comment;
 
-import com.ea544.blogproject.Repo.CommentRepo;
-import com.ea544.blogproject.model.dto.CommentDto;
-import com.ea544.blogproject.model.entity.Comment;
-import com.ea544.blogproject.model.mapper.CommentMapper;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

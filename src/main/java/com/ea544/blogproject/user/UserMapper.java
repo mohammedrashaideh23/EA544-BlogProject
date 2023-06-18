@@ -1,7 +1,7 @@
-package com.ea544.blogproject.model.mapper;
+package com.ea544.blogproject.user;
 
-import com.ea544.blogproject.model.dto.UserDto;
-import com.ea544.blogproject.model.entity.User;
+import com.ea544.blogproject.comment.CommentMapper;
+import com.ea544.blogproject.post.PostMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -17,8 +17,7 @@ public interface UserMapper {
 
     @Mapping(source = "id", target = "id")
     @Mapping(target = "userName", source = "email")
-    @Mapping(target = "postDtoList", source = "postList")
-    @Mapping(target = "commentDtoList", source = "commentList")
+    @Mapping(target = "posts", source = "postList")
     UserDto userToUserDto(User user);
 
     List<UserDto> userToUserDto(List<User> userList);
