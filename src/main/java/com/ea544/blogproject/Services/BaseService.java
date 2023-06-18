@@ -1,12 +1,13 @@
 package com.ea544.blogproject.Services;
 
+import com.ea544.blogproject.model.entity.BaseEntity;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-public abstract class BaseService<T, Repo extends JpaRepository<T, Integer>> {
+public abstract class BaseService<T extends BaseEntity, Repo extends JpaRepository<T, Integer>> {
 
     protected final Repo _repo;
     protected final Class<T> type;
@@ -23,6 +24,7 @@ public abstract class BaseService<T, Repo extends JpaRepository<T, Integer>> {
     public void update(int id, T entity) {
         Optional<T> temp = _repo.findById(id);
         if (temp.isPresent()) {
+            entity.setId(id);
             _repo.save(entity);
         } else {
             throw new EntityNotFoundException(type.getName() + " with id: " + id + " is not found");
