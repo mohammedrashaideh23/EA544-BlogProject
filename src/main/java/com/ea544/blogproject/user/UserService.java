@@ -48,10 +48,10 @@ public class UserService extends BaseService<User, UserRepo> {
             if (owner.isPresent()) {
                 _commentRepo.save(createComment(tempContent, owner.get(), post.get()));
             } else {
-                throw new userNotFoundException();
+                throw new userNotFoundException(username);
             }
         } else {
-            throw new postNotFoundException();
+            throw new postNotFoundException(postId);
         }
     }
 
@@ -75,10 +75,10 @@ public class UserService extends BaseService<User, UserRepo> {
                 comment.get().setContent(content);
                 _commentRepo.save(comment.get());
             } else {
-                throw new userNotFoundException();
+                throw new userNotFoundException(username);
             }
         } else {
-            throw new commentNotFoundException();
+            throw new commentNotFoundException(commentId);
         }
     }
 
@@ -96,10 +96,10 @@ public class UserService extends BaseService<User, UserRepo> {
                         .getComments()
                         .remove(comment);
             } else {
-                throw new userNotFoundException();
+                throw new userNotFoundException(username);
             }
         } else {
-            throw new postNotFoundException();
+            throw new postNotFoundException(postId);
         }
     }
 

@@ -33,16 +33,15 @@ public class UserController {
         _userService.save(user);
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id) {
-        _userService.delete(id);
-    }
-
     @PutMapping("/{id}")
     public void update(@PathVariable int id, @RequestBody User user) {
         _userService.update(id, user);
     }
 
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable int id) {
+        _userService.delete(id);
+    }
 
 
 }

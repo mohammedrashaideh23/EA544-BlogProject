@@ -29,7 +29,7 @@ public class PostService extends BaseService<Post, PostRepo> {
             post.setOwner(user.get());
             _repo.save(post);
         } else {
-            throw new userNotFoundException();
+            throw new userNotFoundException(email);
         }
     }
 
@@ -43,12 +43,12 @@ public class PostService extends BaseService<Post, PostRepo> {
             action.accept(post.get());
             _repo.save(post.get());
         } else {
-            throw new postNotFoundException();
+            throw new postNotFoundException(postId);
         }
     }
 
-    public void update(String owner, int id, Post updatedPost) {
-        Optional<Post> persistedPost = _repo.findById(id);
+    public void update(String owner, int postId, Post updatedPost) {
+        Optional<Post> persistedPost = _repo.findById(postId);
         if (persistedPost.isPresent()) {
             String persistedOwner = persistedPost.get()
                     .getOwner()
@@ -58,10 +58,10 @@ public class PostService extends BaseService<Post, PostRepo> {
                 persistedPost.get().setDescription(updatedPost.getDescription());
                 _repo.save(persistedPost.get());
             } else {
-                throw new userNotFoundException();
+                throw new userNotFoundException(owner);
             }
         } else {
-            throw new postNotFoundException();
+            throw new postNotFoundException(postId);
         }
     }
 
@@ -81,14 +81,14 @@ public class PostService extends BaseService<Post, PostRepo> {
                             .remove(persistedPost.get());
                 } else {
 
-                    throw new userNotFoundException();
+                    throw new userNotFoundException(username);
                 }
             } else {
 
-                throw new userNotFoundException();
+                throw new userNotFoundException(username);
             }
         } else {
-            throw new postNotFoundException();
+            throw new postNotFoundException(postId);
         }
     }
 
