@@ -11,16 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-//@AllArgsConstructor
-//@NoArgsConstructor
 @Entity
-//@NoArgsConstructor
 public class Post
         extends BaseEntity {
 
     private String title;
     private String description;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     User owner;
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private final List<Comment> comments = new ArrayList<>();

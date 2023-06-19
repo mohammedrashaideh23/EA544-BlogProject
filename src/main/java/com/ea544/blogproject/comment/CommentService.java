@@ -10,5 +10,4 @@ public class CommentService extends BaseService<Comment, CommentRepo> {
     protected CommentService(CommentRepo commentRepo) {
         super(commentRepo, Comment.class);
     }
-
 }

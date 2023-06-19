@@ -1,5 +1,6 @@
 package com.ea544.blogproject.shared;
 
+import com.ea544.blogproject.user.User;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -18,4 +19,8 @@ public abstract class BaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date deletedDate;
     private boolean isDeleted = false;
+
+    public User getOwner() {
+        return new User();
+    }
 }

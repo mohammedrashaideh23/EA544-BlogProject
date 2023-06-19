@@ -19,8 +19,13 @@ public class UserController {
     @GetMapping("")
     public List<UserDto> get() {
         var result = _userService.get();
-//        return result;
-        return UserMapper.INSTANCE.userToUserDto(result);
+        return UserMapper.INSTANCE.toUserDtoList(result);
+    }
+
+    @GetMapping("/{id}")
+    public UserDto get(@PathVariable int id) {
+        var result = _userService.get(id);
+        return UserMapper.INSTANCE.toUserDto(result);
     }
 
     @PostMapping("")

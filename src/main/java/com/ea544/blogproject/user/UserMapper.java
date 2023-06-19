@@ -8,17 +8,14 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper(
-//        componentModel = "spring",
-        uses = {PostMapper.class, CommentMapper.class})
-//@Component
+@Mapper(uses = {PostMapper.class, CommentMapper.class})
 public interface UserMapper {
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
     @Mapping(source = "id", target = "id")
     @Mapping(target = "userName", source = "email")
     @Mapping(target = "posts", source = "postList")
-    UserDto userToUserDto(User user);
+    UserDto toUserDto(User user);
 
-    List<UserDto> userToUserDto(List<User> userList);
+    List<UserDto> toUserDtoList(List<User> userList);
 }

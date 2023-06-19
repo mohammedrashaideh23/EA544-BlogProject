@@ -1,6 +1,5 @@
 package com.ea544.blogproject.shared;
 
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -21,17 +20,20 @@ public abstract class BaseService<T extends BaseEntity, Repo extends JpaReposito
     }
 
     public void update(int id, T entity) {
-        Optional<T> temp = _repo.findById(id);
-        if (temp.isPresent()) {
+        if (_repo.findById(id).isPresent()) {
             entity.setId(id);
             _repo.save(entity);
         } else {
-            throw new EntityNotFoundException(type.getName() + " with id: " + id + " is not found");
+            throw new RuntimeException("id is wrong");
         }
     }
 
     public void delete(Integer id) {
-        _repo.deleteById(id);
+        if (_repo.findById(id).isPresent()) {
+            _repo.deleteById(id);
+        } else {
+            throw new RuntimeException("id is wrong");
+        }
     }
 
     public List<T> get() {
@@ -43,7 +45,7 @@ public abstract class BaseService<T extends BaseEntity, Repo extends JpaReposito
         if (temp.isPresent()) {
             return temp.get();
         } else {
-            throw new EntityNotFoundException("Entity with id: " + id + " is not found");
+            throw new RuntimeException("Entity with id: " + id + " is not found");
         }
     }
 
