@@ -19,7 +19,6 @@ public class UserController {
     @GetMapping("")
     public List<UserDto> get() {
         var result = _userService.get();
-//        return result;
         return UserMapper.INSTANCE.userToUserDto(result);
     }
 

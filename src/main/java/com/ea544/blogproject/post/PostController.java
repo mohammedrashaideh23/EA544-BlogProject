@@ -18,14 +18,12 @@ public class PostController {
         _postService = postService;
         _userService = userService;
     }
-//    private final PostMapper _postMapper;
 
     //region Post Actions
     // get all posts
     @GetMapping("")
     public List<PostDto> get() {
         var result = _postService.get();
-//        return result;
         return PostMapper.INSTANCE.toDtoList(result);
     }
 
@@ -33,7 +31,6 @@ public class PostController {
     @GetMapping("/{id}")
     public PostDto get(@PathVariable Integer id) {
         var result = _postService.get(id);
-//        return result;
         return PostMapper.INSTANCE.postToPostDto(result);
     }
 
@@ -42,7 +39,6 @@ public class PostController {
     public List<PostDto> getUserPosts(@PathVariable String username) {
 
         var result = _postService.get(username);
-//        return result;
         return PostMapper.INSTANCE.toDtoList(result);
     }
 
@@ -55,10 +51,10 @@ public class PostController {
     }
 
     // update post
-    @PutMapping("/{id}")
-    public void update(@PathVariable Integer id,
+    @PutMapping("/{username}/{postId}")
+    public void update(@PathVariable String username, @PathVariable Integer postId,
                        @RequestBody Post post) {
-        _postService.update(id,
+        _postService.update(username, postId,
                 post);
     }
 

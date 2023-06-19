@@ -2,13 +2,16 @@ package com.ea544.blogproject.user;
 
 import com.ea544.blogproject.comment.Comment;
 import com.ea544.blogproject.comment.CommentRepo;
+import com.ea544.blogproject.comment.commentNotFoundException;
 import com.ea544.blogproject.post.Post;
 import com.ea544.blogproject.post.PostRepo;
+import com.ea544.blogproject.post.postNotFoundException;
 import com.ea544.blogproject.shared.BaseService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -36,17 +39,24 @@ public class UserService extends BaseService<User, UserRepo> {
         String tempContent = extractFromPayload(payload,
                 "content")
                 .toString();
-        User owner = _repo
+        Optional<User> owner = _repo
                 .findByEmailStartingWith(username);
-        Post post = _postRepo
-                .findById(postId)
-                .orElseThrow();
-        _commentRepo.save(createComment(tempContent, owner, post));
+        Optional<Post> post = _postRepo
+                .findById(postId);
+
+        if (post.isPresent()) {
+            if (owner.isPresent()) {
+                _commentRepo.save(createComment(tempContent, owner.get(), post.get()));
+            } else {
+                throw new userNotFoundException();
+            }
+        } else {
+            throw new postNotFoundException();
+        }
     }
 
     public Object extractFromPayload(Map<String, Object> payload,
                                      String element) {
-
         return payload.get(element);
 
     }
@@ -55,16 +65,20 @@ public class UserService extends BaseService<User, UserRepo> {
         String content = payload.get("content").toString();
         String username = payload.get("username").toString();
         int commentId = Integer.parseInt(payload.get("commentId").toString());
-        Comment comment = _commentRepo.findById(commentId).get();
-
-        if (comment
-                .getOwner()
-                .getEmail()
-                .startsWith(username)) {
-            comment.setContent(content);
-            _commentRepo.save(comment);
+        Optional<Comment> comment = _commentRepo.findById(commentId);
+        if (comment.isPresent()) {
+            if (comment
+                    .get()
+                    .getOwner()
+                    .getEmail()
+                    .startsWith(username)) {
+                comment.get().setContent(content);
+                _commentRepo.save(comment.get());
+            } else {
+                throw new userNotFoundException();
+            }
         } else {
-            throw new RuntimeException("this comment is not for that user");
+            throw new commentNotFoundException();
         }
     }
 
@@ -74,14 +88,18 @@ public class UserService extends BaseService<User, UserRepo> {
         String username = extractFromPayload(payload, "username").toString();
         Comment comment = _commentRepo
                 .findByIdAndOwner_EmailStartsWith(commentId, username);
-        if (comment != null) {
-            _postRepo
-                    .findById(postId)
-                    .get()
-                    .getComments()
-                    .remove(comment);
+        Optional<Post> persistedPost = _postRepo.findById(postId);
+        if (persistedPost.isPresent()) {
+            if (comment != null) {
+                persistedPost
+                        .get()
+                        .getComments()
+                        .remove(comment);
+            } else {
+                throw new userNotFoundException();
+            }
         } else {
-            throw new RuntimeException("the user is not owner of this comment");
+            throw new postNotFoundException();
         }
     }
 

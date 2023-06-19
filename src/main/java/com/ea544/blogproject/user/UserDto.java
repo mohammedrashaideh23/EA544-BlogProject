@@ -10,5 +10,4 @@ public class UserDto {
     private Integer id;
     private String userName;
     private List<PostDto> posts;
-//    private List<CommentDto> commentDtoList;
 }

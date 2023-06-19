@@ -8,14 +8,10 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper(
-//        componentModel = "spring",
-        uses = {UserMapper.class, CommentMapper.class})
+@Mapper(uses = {UserMapper.class, CommentMapper.class})
 public interface PostMapper {
-
     PostMapper INSTANCE = Mappers.getMapper(PostMapper.class);
 
-    //    @Mapping( source = "createdDate", target = "created")
     @Mapping(source = "id", target = "id")
     @Mapping(source = "userName", target = "owner")
     @Mapping(source = "vote.voteCount", target = "votes")
