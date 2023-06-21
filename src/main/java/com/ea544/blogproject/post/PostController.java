@@ -1,5 +1,6 @@
 package com.ea544.blogproject.post;
 
+import com.ea544.blogproject.comment.CommentService;
 import com.ea544.blogproject.user.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,11 +13,13 @@ import java.util.Map;
 public class PostController {
     private final PostService _postService;
     private final UserService _userService;
+    private final CommentService _commentService;
 
     public PostController(PostService postService,
-                          UserService userService) {
+                          UserService userService, CommentService commentService) {
         _postService = postService;
         _userService = userService;
+        _commentService = commentService;
     }
 
     //region Post Actions
@@ -70,7 +73,7 @@ public class PostController {
     public void addComment(@PathVariable int postid,
                            @PathVariable String username,
                            @RequestBody Map<String, Object> payload) {
-        _userService.addComment(postid,
+        _commentService.addComment(postid,
                 username,
                 payload);
     }
@@ -78,13 +81,13 @@ public class PostController {
     @PutMapping("/action/comment")
     public void updateComment(
             @RequestBody Map<String, Object> payload) {
-        _userService.updateComment(payload);
+        _commentService.updateComment(payload);
     }
 
     @DeleteMapping("/action/comment")
     public void deleteComment(@RequestBody Map<String,
             Object> payload) {
-        _userService.deleteComment(payload);
+        _commentService.deleteComment(payload);
     }
 
     @PostMapping("/action/{postId}/upvote")

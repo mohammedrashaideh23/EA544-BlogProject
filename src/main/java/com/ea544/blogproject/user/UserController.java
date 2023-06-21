@@ -1,12 +1,12 @@
 package com.ea544.blogproject.user;
 
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("api/user")
-//@RequiredArgsConstructor
 public class UserController {
 
     private final UserService _userService;
@@ -29,12 +29,12 @@ public class UserController {
     }
 
     @PostMapping("")
-    public void save(@RequestBody User user) {
+    public void save(@Valid @RequestBody User user) {
         _userService.save(user);
     }
 
     @PutMapping("/{id}")
-    public void update(@PathVariable int id, @RequestBody User user) {
+    public void update(@PathVariable int id, @Valid @RequestBody User user) {
         _userService.update(id, user);
     }
 

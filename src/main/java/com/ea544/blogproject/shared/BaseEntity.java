@@ -18,8 +18,6 @@ public abstract class BaseEntity {
     private Date createdDate = new Date();
     @Temporal(TemporalType.TIMESTAMP)
     private Date deletedDate;
-    private boolean isDeleted = false;
-
     public User getOwner() {
         return new User();
     }

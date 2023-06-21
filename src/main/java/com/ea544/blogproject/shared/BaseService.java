@@ -22,16 +22,13 @@ public abstract class BaseService<T extends BaseEntity, Repo extends JpaReposito
         Optional<T> persistedEntity = _repo.findById(id);
         if (persistedEntity.isPresent()) {
             if (entity instanceof User source && persistedEntity.get() instanceof User target) {
-
                 if (source.getEmail() != null) {
                     target.setEmail(source.getEmail());
                 }
                 if (source.getPassword() != null) {
                     target.setPassword(source.getPassword());
                 }
-
                 _repo.save(persistedEntity.get());
-
             } else {
                 throw new RuntimeException("id " + id + " not found");
             }

@@ -12,7 +12,7 @@ import java.util.List;
 public interface UserMapper {
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-    @Mapping(source = "id", target = "id")
+    @Mapping(target = "id", source = "id")
     @Mapping(target = "userName", source = "email")
     @Mapping(target = "posts", source = "postList")
     UserDto toUserDto(User user);

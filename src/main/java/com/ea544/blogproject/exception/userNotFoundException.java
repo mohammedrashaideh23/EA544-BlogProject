@@ -1,4 +1,4 @@
-package com.ea544.blogproject.user;
+package com.ea544.blogproject.exception;
 
 public class userNotFoundException extends RuntimeException {
     public userNotFoundException(String message) {

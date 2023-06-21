@@ -1,9 +1,10 @@
 package com.ea544.blogproject.post;
 
+import com.ea544.blogproject.exception.postNotFoundException;
+import com.ea544.blogproject.exception.userNotFoundException;
 import com.ea544.blogproject.shared.BaseService;
 import com.ea544.blogproject.user.User;
 import com.ea544.blogproject.user.UserRepo;
-import com.ea544.blogproject.user.userNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
